@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hubi WebChat</title>
+  </head>
+  <body>
+    <h1>Hubi WebChat</h1>
+
+    <ul id="messages"></ul>
+    <input  type="text" id="myMessage">
+    <button type="button" id="send">send</button>
+
+    <!--jquery-->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!--socketIO-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js" integrity="sha512-WL6WGKMPBiM9PnHRYIn5YEtq0Z8XP4fkVb4qy7PP4vhmYQErJ/dySyXuFIMDf1eEYCXCrQrMJfkNwKc9gsjTjA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    const socket = io()
+
+    socket.on('connect', () => {
+      console.log("socket connected");
+    });
+    socket.emit('message', 'hello');
+    
+    socket.on('message', function(msg) {
+      $('#messages').append('<li>' + msg + '</li>')
+    })
+
+    $('#send').on('click', function() {
+      socket.send($('#myMessage').val());
+      $('#myMessage').val('');
+    })
+  </script>
+  </script>
+</body>
+</html>
+

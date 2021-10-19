@@ -1,0 +1,7 @@
+COMANDOS DEL BOT:
+· Fijar una víctima: @vic <nombre_usuario>
+· Enviar mensaje: @send <#canal_o_usuario>
+· Ver configuración: @config
+· Comando de prueba: @test
+
+

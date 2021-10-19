@@ -1,0 +1,30 @@
+-MEMORIA-
+  Ejemplo: /set mem <personalidad>
+  Personalidades: 
+   hubi_mem
+   apper_mem
+   avoris_mem
+ 
+  Ejemplo: /set mem <tipo>
+  Plazo de memoria: 
+   corta, media o larga
+
+-VALORES-
+  Monedas: BTC
+  Ejemplo: /coin <moneda>
+
+-HUBSPAIN-
+  Servicios:
+   plex, netdata, tautulli, 
+   organizr, ogpagent, code-hub, 
+   portainer, deemix, overseerr, 
+   watchtower y tinymediamanager
+ 
+  Ejemplo controlar servicio: 
+  /service <stop/start> <servicio>
+  
+  Ejemplo consultar servicio: 
+  /status <servicio>
+   
+  Utilidades: 
+   Ping: /ping <host>

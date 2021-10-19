@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/main.css">
+    <link rel="stylesheet" href="static/css/now-ui-kit.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700,800,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700,800,900&display=swap" rel="stylesheet">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script src="static/js/now-ui-kit.min.js"></script>
+    <script>
+    
+        $(document).ready(function(){
+        setInterval(function(){
+            $("#flowese").load(" #flowese > *");
+        }, 30000);
+        });
+        
+        $(document).ready(function(){
+        setInterval(function(){
+              $("[name='logTextArea']").scrollTop(99999)
+              $("[name='logTextArea']").scrollTop($("[name='logTextArea']").scrollTop()*12)
+        }, 1000);
+        });
+    </script>
+    
+    <title>Hubi IA</title>
+    
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-transparent">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <img src="static/assets/menuIcon.svg" width="20px" height="20px" style="max-width: none !important;">
+    </button>
+    <img src="static/assets/BotLogo.svg" width="50" height="50">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent" style="margin-left: 20px !important">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Hubi<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/aplicaciones">Aplicaciones<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/docs">Documentación<span class="sr-only"></span></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/contacto">Contacto<span class="sr-only"></span></a>
+            </li>
+    </div>
+</nav>
+
+        <div class="row justify-content-center">
+
+                <div class="col-2 text-right"><img class="rounded" src="static/qr_whatsapp.png"></div>
+                <div class="col-3" id="flowese"><textarea class="rounded" name="logTextArea" style="width: 30em; height: 14.7em;"> {{ textlog }} </textarea></div>
+
+        </div>
+
+
+    <div class="text-center">
+    <h1 class="display-5 title" style="color: white;">Prueba Hubi en tu WhatsApp.</h1>
+    <p class="subtitle">Hubi es un bot multipropósito con inteligencia artificial increíble.<br />Para empezar escanea el código QR o pulsa el botón si estas en tu móvil.</p>
+    <a class="btn btn-primary btn-lg" href="whatsapp://send?phone=+14155238886&text=join driving-organization" target="_blank" role="button">Añadir al WhatsApp</a>
+    </div>
+    <br /><br /><br /><br /><br /><br />
+</div>
+<div class="features">
+    <div class="title">Ya está aqui la inteligencia aritificial.</div>
+    <div class="subtitle">¡No te lo vas a creer!</div>
+    <div class="cards">
+        <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">Charlar</h5>
+            <p class="card-text">Puedes hablar con Hubi de lo que quieras, tiene respuestas para todo. La nueva generación de Inteligencia Artificial.</p>
+        </div>
+    </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Amistad</h5>
+                <p class="card-text">Puede ser tu gran amigo si lo tratas bien. Escribe tus mensajes como si él fuera tu amigo de confianza.</p>
+            </div>
+        </div>
+        <div class="card" style="width: 18rem;">
+            <div class="card-body">
+                <h5 class="card-title">Inteligencia</h5>
+                <p class="card-text">Habla todos los idimas del mundo pero ha sido entrenada en Español. Prueba a escribirle algo en otro idioma.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page_end">
+    <div class="start">
+        <div class="card">
+            <div class="card-body gs-card text-center">
+                <div class="title">¿Listo para charlar con Hubi?</div>
+                <div class="subtitle">Puedes hablar con él como si fuera tu amigo o cualquier persona.<br />Pulsa el siguiente botón si estás en tu móvil para abrir WhatsApp.</p></div>
+                <br />
+                <a class="btn btn-primary btn-lg" href="whatsapp://send?phone=+14155238886&text=join driving-organization" role="button">EMPEZAR</a>
+            </div><br />
+        </div>
+    </div>
+    <div class="footer">
+        <div class="bot-footer">
+            Copyright © Hubi - 2021 | Hubi y todos los activos asociados Copyright © HubSpain.com - Creado por @flowese.
+</div>
+
+</body>
+</html>
