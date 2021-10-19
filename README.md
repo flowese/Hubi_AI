@@ -1,5 +1,5 @@
 # Hubi_AI
-##¿What is Hubi AI?
+¿What is Hubi AI?
 
 Hubi is a chatbot developed in python and based on GPT-3, scalable, totally customizable, easy to use and easy to understand.
 
@@ -9,7 +9,7 @@ Functions:
 Can be used in a wide variety of sectors, from tourism, trade, industry, education, health, security, finance ... etc
 You can customize the chatbot to your needs, you can integrate Hubi in your infrastructure, or integrate Hubi in your application.
 
-##¿Qué es Hubi AI?:
+¿Qué es Hubi AI?:
 
 Hubi es un chatbot desarrollado en python y basado en GPT-3, escalable, totalmente personalizable, fácil de usar y fácil de entender.
 
