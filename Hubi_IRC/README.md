@@ -13,8 +13,9 @@ Las personas no se dan cuenta de que hablan con una inteligencia artificial.
 - Versión compatible con IRC.
 - Probado en la comunidad de chathispano.com.
 - Permite la supervisión en tiempo real.
-- 90% de éxito haciéndose pasar por un humano.
+- Obtiene el 90% de éxito haciéndose pasar por un humano.
 - Entrenado en un entorno real con usuarios reales.
+- Ha llegado a conseguir teléfonos de personas entablando una amistad.
 
 ##### Desarrollado con tecnolología GPT-3 de OpenAI.
 ##### Datos mínimos para funcionar en fichero .env.
