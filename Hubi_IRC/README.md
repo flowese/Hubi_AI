@@ -19,8 +19,8 @@ Las personas no se dan cuenta de que hablan con una inteligencia artificial.
 
 ##### Desarrollado con tecnolología GPT-3 de OpenAI.
 ###### Información:
-###### Datos mínimos para funcionar en fichero .env.
-###### El fichero config/memoria.data contiene la personalidad de la IA.
+###### *Datos mínimos para funcionar en fichero .env.
+###### *El fichero config/memoria.data contiene la personalidad de la IA.
 
 @ Powered by HubSpain 
 @ Created by flowese 2021-2022
