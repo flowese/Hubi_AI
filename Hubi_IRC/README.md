@@ -15,7 +15,6 @@ Las personas no se dan cuenta de que hablan con una inteligencia artificial.
 - Permite la supervisión en tiempo real.
 - Obtiene el 90% de éxito haciéndose pasar por un humano.
 - Entrenado en un entorno real con usuarios reales.
-- Ha llegado a conseguir teléfonos de personas entablando una amistad.
 
 ##### Desarrollado con tecnolología GPT-3 de OpenAI.
 ###### Información:
