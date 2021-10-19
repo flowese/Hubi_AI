@@ -5,9 +5,7 @@
 
 Hubi es un chatbot desarrollado en python y basado en GPT-3, escalable, totalmente personalizable, fácil de usar y fácil de entender.
 
-Funciones:
-
-- Hablar con los clientes, tu asesor virtual, control de infraestructuras de gestión, ser tu entrenador personal, gestionar las redes sociales, ... etc
+· Permite interactuar con clientes, tu asesor virtual, control de infraestructuras de gestión, ser tu entrenador personal, gestionar las redes sociales, ... etc
 Hubi es un chatbot desarrollado en python y basado en GPT-3, escalable, totalmente personalizable, fácil de usar y fácil de entender.
 
 
