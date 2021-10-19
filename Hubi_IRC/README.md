@@ -1,7 +1,7 @@
 
 # Hubi_AI - IRC Version.
 
-¿Qué es Hubi AI?:
+¿Qué es Hubi AI?
 
 Hubi es un chatbot desarrollado en python y basado en GPT-3, escalable, totalmente personalizable, fácil de usar y fácil de entender.
 
