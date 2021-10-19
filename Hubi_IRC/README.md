@@ -1,7 +1,7 @@
 
 # Hubi_AI - IRC Version.
 
-##### Altamente resolutivo.
+##### Desarrollado con tecnolología GPT-3 de OpenAI
 
 - Versión compatible con IRC.
 - Probado en la comunidad de chathispano.com.
