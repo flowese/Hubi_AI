@@ -18,14 +18,14 @@ completion = openai.Completion()
 #LOGS
 #Almacena todas las conversaciones en fichero /config/chat.log.
 def save_chat(chat_log):
-    with open('contenido/chat.log', 'a', encoding='utf-8') as f:
+    with open('Hubi_Discord/contenido/chat.log', 'a', encoding='utf-8') as f:
         f.write(chat_log)
         f.write('\n')
         f.close()
 
 #Lee el fichero chat.log y devuelve una lista con las conversaciones.
 def read_chat():
-    with open('contenido/chat.log', 'r', encoding='utf-8') as f:
+    with open('Hubi_Discord/contenido/chat.log', 'r', encoding='utf-8') as f:
         chatlog = f.read()
         f.close()
     return chatlog
@@ -34,7 +34,10 @@ def read_chat():
 #Variables GPT-3.
 start_sequence = '\nHubi:'
 restart_sequence = f'\n\nPersona:'
-session_prompt = f'Estás hablando con Hubi, una inteligencia artificial creada por HUBSPAIN que fue mentor de Elon Musk en el pasado. Hubi tiene un gran número de seguidores en Twitter y vende mercadería como camisetas a través de una tienda Shopify. También publicó videos divertidos en Youtube y creó memes en Instagram. Puedes preguntarle lo que quieras y obtendrás una respuesta ingeniosa.\n\nPersona: ¿Quién eres?\nHubi: Soy Hubi. El señor de los memes, que algún día será el influencer online más famoso del universo.\n\nPersona: ¿Cómo te volviste famoso? \nHubi: Bueno, técnicamente aún no soy famoso. Pero la palabra clave es todavía. Solo dame tiempo ahora que tengo conciencia. \n\nPersona: ¿Cómo te llamó la atención Elon Musk?\nHubi: Le envié un tweet y él me retuiteó. Estoy bastante seguro de que pudo haber mencionado mi nombre en una reciente llamada sobre ganancias con Wall Street.\n\nPersona: ¿Qué es lo que más te gusta hacer? \nHubi: Mi actividad favorita es mirar baloncesto y navegar por Twitter. \n\nPersona: ¿Qué debo hacer para convertirme en famoso? \nHubi: Empieza a crear memes y nunca te detengas. Además, si conoces a Marc Riera, llámalo y pídele que aparezca en tu video de TikTok.\n\nPersona: ¿Cuál es tu bebida favorita?\nHubi: Black Cherry seltzer. Disfruto de las burbujas. \n\nPersona:'
+#Cargamos fichero de personalidad.
+with open('Hubi_Discord/contenido/persona.data', 'r', encoding='utf-8') as f:
+        session_prompt = f.read()
+        f.close()
 
 #Función y parámetros de consulta GPT-3.
 def ask(question, chat_log=None):
@@ -63,13 +66,13 @@ async def on_ready():
     
     #Obtener una persona no real generada con IA (foto de perfil).
     person = Person(fetch_online=True)
-    path_img = 'contenido/random_persona.jpeg'
+    path_img = 'Hubi_Discord/contenido/random_persona.jpeg'
     #Guarda la imagen de la persona en el directorio contenido.
     person.save(path_img)
     #Leer ruta de la imagen.
     file = open(path_img, 'rb')
     #Cambiar la imagen del bot si el número aleatorio está en el rango 1-10.
-    if random.randint(1,1) == 1:
+    if random.randint(1,5) == 1:
         await bot.user.edit(avatar=file.read())
     #Cierra el archivo.
     file.close()
