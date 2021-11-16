@@ -14,18 +14,24 @@ discord_token = os.getenv('DISCORD_TOKEN_BOT')
 #GPT-3 API key.
 openai.api_key = os.getenv('OPENAI_API_KEY')
 completion = openai.Completion()
+#Path foto de perfil de Discord.
+path_img = os.getenv('PATH_IMG')
+#Path Chatlog.
+path_chatlog = os.getenv('PATH_CHATLOG')
+#Path fichero personalidad.
+path_persona = os.getenv('PATH_PERSONA')
 
 #LOGS
 #Almacena todas las conversaciones en fichero /config/chat.log.
 def save_chat(chat_log):
-    with open('Hubi_Discord/contenido/chat.log', 'a', encoding='utf-8') as f:
+    with open(path_chatlog, 'a', encoding='utf-8') as f:
         f.write(chat_log)
         f.write('\n')
         f.close()
 
 #Lee el fichero chat.log y devuelve una lista con las conversaciones.
 def read_chat():
-    with open('Hubi_Discord/contenido/chat.log', 'r', encoding='utf-8') as f:
+    with open(path_chatlog, 'r', encoding='utf-8') as f:
         chatlog = f.read()
         f.close()
     return chatlog
@@ -35,7 +41,7 @@ def read_chat():
 start_sequence = '\nHubi:'
 restart_sequence = f'\n\nPersona:'
 #Cargamos fichero de personalidad.
-with open('Hubi_Discord/contenido/persona.data', 'r', encoding='utf-8') as f:
+with open(path_persona, 'r', encoding='utf-8') as f:
         session_prompt = f.read()
         f.close()
 
@@ -55,10 +61,19 @@ def ask(question, chat_log=None):
  story = response['choices'][0]['text']
  return str(story)
 
+#Función de modelo de Fine-tuning GPT-3.
+'''
+def ask_finetune(question, chat_log=None):
+    prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
+    openai.Completion.create(
+    model=FINE_TUNED_MODEL,
+    prompt=prompt_text)
+'''
 #EVENTOS
 #Al iniciar el bot, se ejecuta la función "on_ready".
 @bot.event
 async def on_ready():
+    global path_img
     #Actividad del bot en discord
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name='')) #Cambiar el estado aquí.
     #Muestra que el bot está conectado a tu token y a la API de Discord
@@ -66,7 +81,6 @@ async def on_ready():
     
     #Obtener una persona no real generada con IA (foto de perfil).
     person = Person(fetch_online=True)
-    path_img = 'Hubi_Discord/contenido/random_persona.jpeg'
     #Guarda la imagen de la persona en el directorio contenido.
     person.save(path_img)
     #Leer ruta de la imagen.
@@ -87,15 +101,19 @@ async def on_message(message):
             chat_history = read_chat()
             chat_log=session_prompt+chat_history
             answer = ask(message.content, chat_log)
-            print(f'{chat_log}{message.author}:{answer}')
+            now = datetime.datetime.now()
+            fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
+            print(f'{fechalog} - {chat_log}{message.author}:{answer}')
             #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
             if len(answer) < 1:
                 answer = ask(message.content, chat_log)
                 print('Reenviando consulta a GPT-3...')
                 await message.channel.send(answer)
             await message.channel.send(answer)
-        
-    mensaje = f'{message.author}: {message.content}'
+
+    now = datetime.datetime.now()
+    fechalog = (now.strftime("%Y-%m-%d %H:%M:%S")) 
+    mensaje = f'{fechalog} - {message.author}: {message.content}'
     global Persona
     Persona = message.author
     save_chat(mensaje)
@@ -145,7 +163,9 @@ async def on_message(message):
         chat_history = read_chat()
         chat_log=session_prompt+chat_history
         answer = ask(message.content, chat_log)
-        print(f'{chat_log}{message.author}:{answer}')
+        now = datetime.datetime.now()
+        fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
+        print(f'{fechalog} - {chat_log}{message.author}:{answer}')
         #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
         if len(answer) < 1:
             answer = ask(message.content, chat_log)
