@@ -66,7 +66,7 @@ def ask(question, chat_log=None):
  return str(story)
 
 #Función de modelo de Fine-tuning GPT-3.
-'''
+''' ****PENDIENTE IMPLEMENTAR****
 def ask_finetune(question, chat_log=None):
     prompt_text = f'{chat_log}{restart_sequence}: {question}{start_sequence}:'
     openai.Completion.create(
