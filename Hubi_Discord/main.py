@@ -2,6 +2,10 @@
 import discord, openai
 from dotenv import load_dotenv
 import os, datetime, random, subprocess
+import urllib.request
+import re
+
+from wikipedia.wikipedia import search
 from funciones.thispersondoesnotexist import Person
 import wikipedia
 
@@ -91,19 +95,20 @@ async def on_ready():
     #Cierra el archivo.
     file.close()
 
+
+
 #Al recibir un mensaje, se ejecuta la función "on_message".
 @bot.event
 async def on_message(message):
     #Si se menciona al bot contestar.
     for x in message.mentions:
         if(x==bot.user):
-            #Rececpción de la consulta para GPT-3 en DMs.
+            #Rececpción de la consulta para GPT-3 en menciones al bot.
             chat_history = read_chat()
             chat_log=session_prompt+chat_history
             answer = ask(message.content, chat_log)
             now = datetime.datetime.now()
             fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
-            print(f'{fechalog} - {chat_log}{message.author}:{answer}')
             #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
             if len(answer) < 1:
                 answer = ask(message.content, chat_log)
@@ -117,10 +122,19 @@ async def on_message(message):
     global Persona
     Persona = message.author
     save_chat(mensaje)
+
+    #Si el mensaje es del propio bot, no hacer nada.
     if message.author == bot.user:
         return
 
     #COMANDOS
+    #Realiza una búsqueda en youtube y devuelve los resultados.
+    if message.content.startswith('!youtube'):
+        search_keyword = message.content[9:]
+        html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + search_keyword)
+        video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+        await message.channel.send(f'https://www.youtube.com/watch?v={video_ids[0]}')
+
     #Contesta al mensaje con el tiempo actual con el comando !time.
     if message.content.startswith('!time'):
         await message.channel.send(datetime.datetime.now().strftime("Actualmente son las %H:%M:%S"))
@@ -158,14 +172,13 @@ async def on_message(message):
         #Contestar con el chat log.
         await message.channel.send(chat_log)
 
-    #Rececpción de la consulta para GPT-3.
+    #Rececpción de la consulta para GPT-3 y contestación.
     else:
         chat_history = read_chat()
         chat_log=session_prompt+chat_history
         answer = ask(message.content, chat_log)
         now = datetime.datetime.now()
         fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
-        print(f'{fechalog} - {chat_log}{message.author}:{answer}')
         #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
         if len(answer) < 1:
             answer = ask(message.content, chat_log)
