@@ -100,91 +100,115 @@ async def on_ready():
 #Al recibir un mensaje, se ejecuta la función "on_message".
 @bot.event
 async def on_message(message):
-    #Si se menciona al bot contestar.
-    for x in message.mentions:
-        if(x==bot.user):
-            #Rececpción de la consulta para GPT-3 en menciones al bot.
-            chat_history = read_chat()
-            chat_log=session_prompt+chat_history
-            answer = ask(message.content, chat_log)
-            now = datetime.datetime.now()
-            fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
-            #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
-            if len(answer) < 1:
+    #solo contestar a los usuarios registrados en contenido/whitelist.txt
+    if message.author.name in open('contenido/whitelist.txt').read().splitlines():
+        #Si se menciona al bot contestar.
+        for x in message.mentions:
+            if(x==bot.user):
+                #Rececpción de la consulta para GPT-3 en menciones al bot.
+                chat_history = read_chat()
+                chat_log=session_prompt+chat_history
                 answer = ask(message.content, chat_log)
-                print('Reenviando consulta a GPT-3...')
+                now = datetime.datetime.now()
+                fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
+                #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
+                if len(answer) < 1:
+                    answer = ask(message.content, chat_log)
+                    print('Reenviando consulta a GPT-3...')
+                    await message.channel.send(answer)
                 await message.channel.send(answer)
-            await message.channel.send(answer)
 
-    now = datetime.datetime.now()
-    fechalog = (now.strftime("%Y-%m-%d %H:%M:%S")) 
-    mensaje = f'{fechalog} - {message.author}: {message.content}'
-    global Persona
-    Persona = message.author
-    save_chat(mensaje)
+        now = datetime.datetime.now()
+        fechalog = (now.strftime("%Y-%m-%d %H:%M:%S")) 
+        mensaje = f'{fechalog} - {message.author}: {message.content}'
+        global Persona
+        Persona = message.author
+        save_chat(mensaje)
 
-    #Si el mensaje es del propio bot, no hacer nada.
-    if message.author == bot.user:
-        return
-    #Si el mensaje DM contestar al mensaje.
-    if message.channel.type == discord.ChannelType.private:
-            chat_history = read_chat()
-            chat_log=session_prompt+chat_history
-            answer = ask(message.content, chat_log)
-            now = datetime.datetime.now()
-            fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
-            #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
-            if len(answer) < 1:
+        #Si el mensaje es del propio bot, no hacer nada.
+        if message.author == bot.user:
+            return
+        #Si el mensaje DM contestar al mensaje.
+        '''
+        if message.channel.type == discord.ChannelType.private:
+                chat_history = read_chat()
+                chat_log=session_prompt+chat_history
                 answer = ask(message.content, chat_log)
-                print('Reenviando consulta a GPT-3...')
+                now = datetime.datetime.now()
+                fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
+                #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
+                if len(answer) < 1:
+                    answer = ask(message.content, chat_log)
+                    print('Reenviando consulta a GPT-3...')
+                    await message.channel.send(answer)
                 await message.channel.send(answer)
-            await message.channel.send(answer)
+        '''
 
+        #COMANDOS
+        #Añadir usuario a la whitelist con el comando !whitelist add <usuario> o borrar usuario con !whitelist remove <usuario>
+        if message.content.startswith('!whitelist add'):
+            with open('contenido/whitelist.txt', 'a') as f:
+                user = message.content.split()[2]
+                await message.channel.send(f'Añadiendo usuario {user} a la whitelist...')
+                f.write('\n')
+                f.write(user)
+                f.close()
+                await message.channel.send(f'Usuario {user} añadido correctamente.')
+        if message.content.startswith('!whitelist remove') or message.content.startswith('!whitelist rem'):
+            with open('contenido/whitelist.txt', 'r') as f:
+                user = message.content.split()[2]
+                await message.channel.send(f'Borrando usuario {user} de la whitelist...')
+                lines = f.readlines()
+                f.close()
+            with open('contenido/whitelist.txt', 'w') as f:
+                for line in lines:
+                    if user not in line:
+                        f.write(line)
+                f.close()
+            await message.channel.send(f'Usuario {user} borrado correctamente.')
+        #Realiza una búsqueda en youtube y devuelve los resultados.
+        if message.content.startswith('!youtube'):
+            search_keyword = message.content[9:]
+            html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + search_keyword)
+            video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
+            await message.channel.send(f'https://www.youtube.com/watch?v={video_ids[0]}')
 
-    #COMANDOS
-    #Realiza una búsqueda en youtube y devuelve los resultados.
-    if message.content.startswith('!youtube'):
-        search_keyword = message.content[9:]
-        html = urllib.request.urlopen("https://www.youtube.com/results?search_query=" + search_keyword)
-        video_ids = re.findall(r"watch\?v=(\S{11})", html.read().decode())
-        await message.channel.send(f'https://www.youtube.com/watch?v={video_ids[0]}')
+        #Contesta al mensaje con el tiempo actual con el comando !time.
+        if message.content.startswith('!time'):
+            await message.channel.send(datetime.datetime.now().strftime("Actualmente son las %H:%M:%S"))
+        #Contesta con la previsión del tiempo api openweathermap con el comando !weather.
+        if message.content.startswith('!weather'):
+            await message.channel.send('https://www.google.es/search?q=previsi%C3%B3n+del+tiempo')
 
-    #Contesta al mensaje con el tiempo actual con el comando !time.
-    if message.content.startswith('!time'):
-        await message.channel.send(datetime.datetime.now().strftime("Actualmente son las %H:%M:%S"))
-    #Contesta con la previsión del tiempo api openweathermap con el comando !weather.
-    if message.content.startswith('!weather'):
-        await message.channel.send('https://www.google.es/search?q=previsi%C3%B3n+del+tiempo')
+        #Buscar en wikipedia api en español el comando !wiki palabra.
+        if message.content.startswith('!wiki'):
+            #Obtener la palabra a buscar.
+            palabra = message.content[5:]
+            #Resultados en español.
+            wikipedia.set_lang("es")
+            #Buscar la palabra en wikipedia.
+            resultado = wikipedia.summary(palabra, sentences=2)
+            #Contestar con el resultado.
+            await message.channel.send(resultado)
 
-    #Buscar en wikipedia api en español el comando !wiki palabra.
-    if message.content.startswith('!wiki'):
-        #Obtener la palabra a buscar.
-        palabra = message.content[5:]
-        #Resultados en español.
-        wikipedia.set_lang("es")
-        #Buscar la palabra en wikipedia.
-        resultado = wikipedia.summary(palabra, sentences=2)
-        #Contestar con el resultado.
-        await message.channel.send(resultado)
+        #Hacer ping a un host con el comando !ping host
+        if message.content.startswith('!ping'):
+            #Obtener el host.
+            host = message.content[6:]
+            #Ejecutar el comando.
+            response = subprocess.call(['ping', host])
+            #Contestar con el resultado.
+            if response == 0:
+                await message.channel.send('El host parece estar en linea.')
+            else:
+                await message.channel.send('Pareceque el host no está en linea.')
 
-    #Hacer ping a un host con el comando !ping host
-    if message.content.startswith('!ping'):
-        #Obtener el host.
-        host = message.content[6:]
-        #Ejecutar el comando.
-        response = subprocess.call(['ping', host])
-        #Contestar con el resultado.
-        if response == 0:
-            await message.channel.send('El host parece estar en linea.')
-        else:
-            await message.channel.send('Pareceque el host no está en linea.')
-
-    #Contesta con el chat log de la persona con el comando !chatlog.
-    if message.content.startswith('!chatlog'):
-        #Leer el chat log.
-        chat_log = read_chat()
-        #Contestar con el chat log.
-        await message.channel.send(chat_log)
+        #Contesta con el chat log de la persona con el comando !chatlog.
+        if message.content.startswith('!chatlog'):
+            #Leer el chat log.
+            chat_log = read_chat()
+            #Contestar con el chat log.
+            await message.channel.send(chat_log)
 
     #Rececpción de la consulta para GPT-3 y contestación.
     else:
