@@ -126,6 +126,20 @@ async def on_message(message):
     #Si el mensaje es del propio bot, no hacer nada.
     if message.author == bot.user:
         return
+    #Si el mensaje DM contestar al mensaje.
+    if message.channel.type == discord.ChannelType.private:
+            chat_history = read_chat()
+            chat_log=session_prompt+chat_history
+            answer = ask(message.content, chat_log)
+            now = datetime.datetime.now()
+            fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
+            #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
+            if len(answer) < 1:
+                answer = ask(message.content, chat_log)
+                print('Reenviando consulta a GPT-3...')
+                await message.channel.send(answer)
+            await message.channel.send(answer)
+
 
     #COMANDOS
     #Realiza una búsqueda en youtube y devuelve los resultados.
@@ -174,17 +188,19 @@ async def on_message(message):
 
     #Rececpción de la consulta para GPT-3 y contestación.
     else:
-        chat_history = read_chat()
-        chat_log=session_prompt+chat_history
-        answer = ask(message.content, chat_log)
-        now = datetime.datetime.now()
-        fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
-        #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
-        if len(answer) < 1:
+        # solo contestar al 1% de los mensajes que no son del bot.
+        if random.randint(1,100) == 1:
+            chat_history = read_chat()
+            chat_log=session_prompt+chat_history
             answer = ask(message.content, chat_log)
-            print('Reenviando consulta a GPT-3...')
+            now = datetime.datetime.now()
+            fechalog = (now.strftime("%Y-%m-%d %H:%M:%S"))
+            #Si la respuesta está vacía, envía nuevamente la consulta a GPT-3.
+            if len(answer) < 1:
+                answer = ask(message.content, chat_log)
+                print('Reenviando consulta a GPT-3...')
+                await message.channel.send(answer)
             await message.channel.send(answer)
-        await message.channel.send(answer)
 
 #Iniciar el bot.
 bot.run(discord_token)
