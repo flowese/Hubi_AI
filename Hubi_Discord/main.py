@@ -101,7 +101,7 @@ async def on_ready():
 @bot.event
 async def on_message(message):
     #solo contestar a los usuarios registrados en contenido/whitelist.txt
-    if message.author.name in open('contenido/whitelist.txt').read().splitlines():
+    if message.author.name in open('Hubi_Discord/contenido/whitelist.txt').read().splitlines():
         #Si se menciona al bot contestar.
         for x in message.mentions:
             if(x==bot.user):
@@ -129,7 +129,7 @@ async def on_message(message):
         if message.author == bot.user:
             return
         #Si el mensaje DM contestar al mensaje.
-        '''
+        ''' ***PENDIENTE REVISAR***
         if message.channel.type == discord.ChannelType.private:
                 chat_history = read_chat()
                 chat_log=session_prompt+chat_history
@@ -147,7 +147,7 @@ async def on_message(message):
         #COMANDOS
         #Añadir usuario a la whitelist con el comando !whitelist add <usuario> o borrar usuario con !whitelist remove <usuario>
         if message.content.startswith('!whitelist add'):
-            with open('contenido/whitelist.txt', 'a') as f:
+            with open('Hubi_Discord/contenido/whitelist.txt', 'a') as f:
                 user = message.content.split()[2]
                 await message.channel.send(f'Añadiendo usuario {user} a la whitelist...')
                 f.write('\n')
@@ -155,12 +155,12 @@ async def on_message(message):
                 f.close()
                 await message.channel.send(f'Usuario {user} añadido correctamente.')
         if message.content.startswith('!whitelist remove') or message.content.startswith('!whitelist rem'):
-            with open('contenido/whitelist.txt', 'r') as f:
+            with open('Hubi_Discord/contenido/whitelist.txt', 'r') as f:
                 user = message.content.split()[2]
                 await message.channel.send(f'Borrando usuario {user} de la whitelist...')
                 lines = f.readlines()
                 f.close()
-            with open('contenido/whitelist.txt', 'w') as f:
+            with open('Hubi_Discord/contenido/whitelist.txt', 'w') as f:
                 for line in lines:
                     if user not in line:
                         f.write(line)
