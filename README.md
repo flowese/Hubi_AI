@@ -26,4 +26,4 @@ Hubi es un chatbot desarrollado en python y basado en GPT-3, escalable, totalmen
 
 Integraciones actuales:
 
-SMS, WhatsApp, Telegram, IRC, Web, Twitter.
+SMS, WhatsApp, Telegram, Discord, Web, Twitter.
