@@ -11,7 +11,7 @@ You can customize the chatbot to your needs, you can integrate Hubi in your infr
 
 Current integrations:
 
-SMS, WhatsApp, Telegram, Web, Twitter.
+SMS, WhatsApp, Telegram, Discord, Web, Twitter.
 
 ---
 
