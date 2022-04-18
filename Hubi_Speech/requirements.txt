@@ -1,0 +1,5 @@
+os
+time
+openai
+speech_recognition
+gtts
